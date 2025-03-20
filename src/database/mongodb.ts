@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import {loadCSV} from '../utils/loadData';
 import dotenv from 'dotenv';
+import logger from '../utils/logger';
 
 dotenv.config();
 
@@ -16,7 +17,7 @@ export class MongoDB {
     static getInstance(): MongoDB {
         if (!MongoDB.instance) {
             MongoDB.instance = new MongoDB();
-            console.log("here??")
+            logger.info("MongoDB instance created");
         }
 
         return MongoDB.instance;
@@ -24,23 +25,24 @@ export class MongoDB {
 
     private handleEvents() {
         this.connection.on('connected', () => {
-
+            logger.info("MongoDB connected");
         });
 
         this.connection.on('disconnected', () => {
+            logger.info("MongoDB disconnected");
 
         });
 
         this.connection.on('error', (error: any) => {
+            logger.error("MongoDB connection error: " + error);
 
         });
     }
 
     async connect(): Promise<void> {
         try {
-            console.log("env uri", process.env.DB_URI);
             if (!process.env.DB_URI) {
-                console.log("error in mongodb");
+                logger.error("DB_URI is not defined");
                 throw new Error('DB_URI environment variable is not defined');
             }
             
@@ -49,9 +51,12 @@ export class MongoDB {
                 connectTimeoutMS: 10000,
                 socketTimeoutMS: 45000,
             });
+            logger.info("MongoDB connection successful");
+
             mongoose.set('strictQuery', true);
             loadCSV();
         } catch (error: any) {
+            logger.error("Error connecting to MongoDB: " + error);
 
             throw error;
         }
@@ -60,7 +65,10 @@ export class MongoDB {
     async disconnect(): Promise<void> {
         try {
             await this.connection.close(true);
+            logger.info("MongoDB disconnected successfully");
+
         } catch (error: any) {
+            logger.error("Error disconnecting MongoDB: " + error);
 
             throw error;
         }

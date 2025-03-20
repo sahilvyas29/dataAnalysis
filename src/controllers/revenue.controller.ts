@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { OrderModel } from '../models/order.model';
 import { SalesModel } from '../models/sales.model';
 import { ProductModel } from '../models/product.model';
+import logger from '../utils/logger';
 
 export const totalRevenue = async (req: Request, res: Response) => {
     try {
@@ -24,8 +25,10 @@ export const totalRevenue = async (req: Request, res: Response) => {
       ]);
   
       res.json(totalRevenue);
+      logger.info("Total revenue calculated");
+
     } catch (error) {
-      console.error('Error calculating total revenue:', error);
+      logger.error('Error calculating total revenue:', error);
       res.status(500).json({ message: 'Error calculating total revenue' });
     }
 };
@@ -91,10 +94,10 @@ export const totalRevenueByProduct = async (req: Request, res: Response) => {
           $unwind: '$productDetails',
         },
       ]);
-  
+      logger.info("Total revenue by product calculated");
       res.json(totalRevenueByProduct);
     } catch (error) {
-      console.error('Error calculating total revenue by product:', error);
+      logger.error('Error calculating total revenue by product:', error);
       res.status(500).json({ message: 'Error calculating total revenue by product' });
     }
 };
@@ -146,10 +149,11 @@ export const totalRevenueByCategory = async (req: Request, res: Response) => {
           },
         },
       ]);
-  
+      logger.info("Total revenue by category calculated");
+
       res.json(totalRevenueByCategory);
     } catch (error) {
-      console.error('Error calculating total revenue by category:', error);
+      logger.error('Error calculating total revenue by category:', error);
       res.status(500).json({ message: 'Error calculating total revenue by category' });
     }
 };
@@ -204,10 +208,11 @@ export const totalRevenueByRegion = async (req: Request, res: Response) => {
           },
         },
       ]);
-  
+      logger.info("Total revenue by region calculated");
+
       res.json(totalRevenueByRegion);
     } catch (error) {
-      console.error('Error calculating total revenue by region:', error);
+      logger.error('Error calculating total revenue by region:', error);
       res.status(500).json({ message: 'Error calculating total revenue by region' });
     }
 };
