@@ -51,6 +51,7 @@ Method: GET
 Query: startDate, endDate (YYYY-MM-DD)
 Example:
 GET http://localhost:3000/api/revenue/total-revenue?startDate=2023-01-01&endDate=2023-12-31
+
 Response : [ { "_id": null, "totalRevenue": 1230 } ]
 
 
@@ -60,6 +61,7 @@ Method: GET
 Query: startDate, endDate (YYYY-MM-DD)
 Example:
 GET http://localhost:3000/api/revenue/total-revenue-by-product?startDate=2023-01-01&endDate=2023-12-31
+
 Response: [
   {
     "_id": "P123",
@@ -75,6 +77,7 @@ Method: GET
 Query: startDate, endDate (YYYY-MM-DD)
 Example:
 GET http://localhost:3000/api/revenue/total-revenue-by-category?startDate=2023-01-01&endDate=2023-12-31
+
 Response:   [
   { "_id": "Shoes", "totalRevenue": 500000 },
   { "_id": "Electronics", "totalRevenue": 600000 }
@@ -87,6 +90,7 @@ Method: GET
 Query: startDate, endDate (YYYY-MM-DD)
 Example:
 GET http://localhost:3000/api/revenue/total-revenue-by-region?startDate=2023-01-01&endDate=2023-12-31
+
 Response:[ { "_id": "North America", "totalRevenue": 1000000 } ]
 
 
